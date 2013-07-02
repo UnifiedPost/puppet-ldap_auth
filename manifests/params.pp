@@ -14,12 +14,12 @@ class ldap_auth::params (
   ########################
 
   $_packages = $packages ? {
-    undef   => $::operatingsystem ? {
-      /(CentOS|Redhat|Fedora)/  => $::operatingsystemrelease ? {
-        default => [ "nss-pam-ldapd.${::architecture}" ],
-        /^5/    => [ "nss_ldap.${::architecture}" ],
+    undef   => $::osfamily ? {
+      'RedHat'  => $::operatingsystemrelease ? {
+        default   => [ "nss-pam-ldapd.${::architecture}" ],
+        /^5/      => [ "nss_ldap.${::architecture}" ],
       },
-      /(Debian|Ubuntu)/         => [ 'libnss-ldapd' , 'libpam-ldapd' ],
+      'Debian'  => [ 'libnss-ldapd' , 'libpam-ldapd' ],
     },
     default => $packages,
   }
