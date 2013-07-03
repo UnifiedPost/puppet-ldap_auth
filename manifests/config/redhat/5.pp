@@ -9,6 +9,16 @@
 #
 class ldap_auth::config::redhat::5 {
 
+  require ldap_auth::config
+
+  # Used in templates.
+  $server = $::ldap_auth::config::server
+  $base   = $::ldap_auth::config::base
+  $binddn = $::ldap_auth::config::binddn
+  $bindpw = $::ldap_auth::config::bindpw
+  $ssl    = $::ldap_auth::config::ssl
+
+
   File{
     owner => 'root',
     group => 'root',
@@ -21,10 +31,10 @@ class ldap_auth::config::redhat::5 {
 
   file{'/etc/ldap.secret':
     mode    => '0600',
-    content => "${ldap_auth::params::_bindpw}\n",
+    content => "${bindpw}\n",
   }
 
-  service{'nscd':
+  service {'nscd':
     ensure => 'stopped',
   }
 

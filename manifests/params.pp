@@ -4,7 +4,7 @@ class ldap_auth::params (
   $base          = undef,
   $binddn        = undef,
   $bindpw        = undef,
-  $filter        = undef,
+  $filter        = [],
   $nslcd_service = undef,
   $ssl           = false,
 ) {
@@ -22,40 +22,6 @@ class ldap_auth::params (
       'Debian'  => [ 'libnss-ldapd' , 'libpam-ldapd' ],
     },
     default => $packages,
-  }
-
-  ########################
-  ####     Config     ####
-  ########################
-
-  $_server = $server ? {
-    undef   => 'localhost',
-    default => $server,
-  }
-
-  $_base   = $base ? {
-    undef   => '',
-    default => $base,
-  }
-
-  $_binddn = $binddn ? {
-    undef   => '',
-    default => $binddn,
-  }
-
-  $_bindpw = $bindpw ? {
-    undef   => '',
-    default => $bindpw,
-  }
-
-  $_filter = $filter ? {
-    undef   => '',
-    default => $filter,
-  }
-
-  $_ssl = $ssl ? {
-    true    => 'yes',
-    default => 'no',
   }
 
   ########################

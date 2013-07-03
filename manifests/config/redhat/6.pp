@@ -14,21 +14,31 @@
 #
 class ldap_auth::config::redhat::6 {
 
-  file{'/etc/nslcd.conf':
+  require ldap_auth::config
+  $server = $::ldap_auth::config::server
+  $base   = $::ldap_auth::config::base
+  $ssl    = $::ldap_auth::config::ssl
+  $binddn = $::ldap_auth::config::binddn
+  $bindpw = $::ldap_auth::config::bindpw
+  $filter = $::ldap_auth::config::filter
+
+
+  file {'/etc/nslcd.conf':
     owner   => 'root',
     group   => 'nslcd',
     mode    => '0640',
     content => template('ldap_auth/nslcd.conf.erb'),
-    require => Package[$::ldap_auth::params::_packages],
-    notify  => Service[$::ldap_auth::params::_nslcd_service],
+    require => Package[$::ldap_auth::packages],
+    notify  => Service[$::ldap_auth::nslcd_service],
   }
 
-  service{$::ldap_auth::params::_nslcd_service:
+  service {$::ldap_auth::nslcd_service:
     ensure  => 'running',
+    alias   => 'nslcd',
     require => File['/etc/nslcd.conf'],
   }
 
-  group{'nslcd':
+  group {'nslcd':
     ensure => 'present',
     gid    => '7050',
   }

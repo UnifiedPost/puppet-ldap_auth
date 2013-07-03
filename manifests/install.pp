@@ -1,6 +1,8 @@
-class ldap_auth::install {
+class ldap_auth::install (
+  $packages = $::ldap_auth::packages,
+) inherits ldap_auth {
 
-  package {$::ldap_auth::params::_packages:
+  package {$packages:
     ensure => 'installed',
   }
 

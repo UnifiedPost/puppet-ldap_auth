@@ -7,19 +7,23 @@ uid nslcd
 gid nslcd
 
 # The location at which the LDAP server(s) should be reachable.
-uri ldap://<%= scope.lookupvar('::ldap_auth::params::_server') %>
+uri ldap://<%= @server %>
 
 # The search base that will be used for all queries.
-base <%= scope.lookupvar('::ldap_auth::params::_base') %>
+base <%= @base %>
 
 # The LDAP protocol version to use.
 #ldap_version 3
 
 # The DN to bind with for normal lookups.
-binddn <%= scope.lookupvar('::ldap_auth::params::_binddn') %>
-bindpw <%= scope.lookupvar('::ldap_auth::params::_bindpw') %>
+<% if @binddn -%>
+binddn <%= @binddn %>
+<%   if @bindpw -%>
+bindpw <%= @bindpw %>
+<%   end -%>
+<% end -%>
 
-<% scope.lookupvar('::ldap_auth::params::_filter').each do |f| -%>
+<% [@filter].flatten.each do |f| -%>
 filter <%= f %>
 <% end -%>
 
@@ -27,6 +31,17 @@ filter <%= f %>
 #rootpwmoddn !NO-MODIFICATIONS!
 
 # SSL options
+<%
+  if ['true',true].include?(@ssl)
+    ssl = 'yes'
+  elsif ['false',false].include?(@ssl)
+    ssl = 'no'
+  else
+    ssl = @ssl
+  end
+%>
+ssl <%= ssl %>
+
 #ssl off
 #tls_reqcert never
 

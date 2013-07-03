@@ -10,17 +10,24 @@
 #
 class ldap_auth::config::redhat::common {
 
+  require ldap_auth::config
+  $base   = $::ldap_auth::config::base
+  $server = $::ldap_auth::config::server
+  $ssl    = $::ldap_auth::config::ssl
+
 
   file {'/etc/pam_ldap.conf':
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => template('ldap_auth/pam_ldap.conf.erb'),
-    require => Package[$::ldap_auth::params::_packages],
-    notify  => operatingsystemrelease ? {
-      /^6/    => Service[$::ldap_auth::params::_nslcd_service],
-      default => undef,
-    },
+    require => Package[$::ldap_auth::packages],
+  }
+
+  if $::operatingsystemrelease =~ /^6/ {
+    File['/etc/pam_ldap.conf'] {
+      notify => Service[$::ldap_auth::nslcd_service],
+    }
   }
 
   augeas{'redhat-nsswitch.conf':
