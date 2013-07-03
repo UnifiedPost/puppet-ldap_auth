@@ -24,7 +24,8 @@ class ldap_auth::config::redhat::common {
   }
 
   augeas{'redhat-nsswitch.conf':
-    context => '/files/etc/nsswitch.conf',
+    incl    => '/etc/nsswitch.conf',
+    lens    => 'Nsswitch.lns',
     changes => [
       'set database[. = "passwd"]/service[1] files',
       'set database[. = "passwd"]/service[2] ldap',
