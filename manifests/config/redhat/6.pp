@@ -38,11 +38,6 @@ class ldap_auth::config::redhat::6 {
     require => File['/etc/nslcd.conf'],
   }
 
-  group {'nslcd':
-    ensure => 'present',
-    gid    => '7050',
-  }
-
   augeas{'authconfig':
     context => '/files/etc/authconfig',
     changes => [
