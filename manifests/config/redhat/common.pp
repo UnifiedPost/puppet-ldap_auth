@@ -1,5 +1,15 @@
-class ldap_auth::config::redhat::common
-{
+# == Class: ldap_auth::config::redhat::common
+#
+# Helper class to split up configuration for redhat (and co).
+# This class should never be called directly.
+#
+# === Todo:
+#
+# TODO: tls_cacertdir parameter
+# TODO: pam_password parameter
+#
+class ldap_auth::config::redhat::common {
+
 
   file {'/etc/pam_ldap.conf':
     owner   => 'root',

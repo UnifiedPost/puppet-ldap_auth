@@ -1,3 +1,12 @@
+# == Class: ldap_auth::config::redhat::5
+#
+# Helper class to split up configuration for redhat (and co).
+# This class should never be called directly.
+#
+# === Todo:
+#
+# TODO: Service nscd -> parameter?
+#
 class ldap_auth::config::redhat::5 {
 
   File{

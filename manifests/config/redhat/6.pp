@@ -1,3 +1,17 @@
+# == Class: ldap_auth::config::redhat::6
+#
+# Helper class to split up configuration for redhat (and co).
+# This class should never be called directly.
+#
+# === Todo:
+#
+# TODO: Move init of the nslcd service to somewhere else.
+#       Service is not configuration.
+# TODO: Do not hardcode the gid for nslcd
+# TODO: Support ssl in nslcd configuration
+# TODO: Support rootpwmoddn parameter
+# TODO: Support rootpwmodpw
+#
 class ldap_auth::config::redhat::6 {
 
   file{'/etc/nslcd.conf':
