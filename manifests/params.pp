@@ -7,6 +7,7 @@ class ldap_auth::params (
   $filter        = [],
   $nslcd_service = 'nslcd',
   $nslcd_group   = 'ldap',
+  $nslcd_user    = 'nslcd',
   $ssl           = false,
 ) {
 

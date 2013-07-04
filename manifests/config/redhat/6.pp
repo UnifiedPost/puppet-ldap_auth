@@ -22,15 +22,19 @@ class ldap_auth::config::redhat::6 {
   $bindpw = $::ldap_auth::config::bindpw
   $filter = $::ldap_auth::config::filter
 
+  $nslcd_user     = $::ldap_auth::nslcd_user
+  $nslcd_group    = $::ldap_auth::nslcd_group
+  $nslcd_service  = $::ldap_auth::nslcd_service
+
 
 
   file {'/etc/nslcd.conf':
     owner   => 'root',
-    group   => $::ldap_auth::nslcd_group,
+    group   => $nslcd_group,
     mode    => '0640',
     content => template('ldap_auth/nslcd.conf.erb'),
     require => Package[$::ldap_auth::packages],
-    notify  => Service[$::ldap_auth::nslcd_service],
+    notify  => Service['nslcd'],
   }
 
   service {$::ldap_auth::nslcd_service:

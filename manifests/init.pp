@@ -56,6 +56,7 @@ class ldap_auth (
   $packages       = $::ldap_auth::params::_packages,
   $nslcd_service  = $::ldap_auth::params::nslcd_service,
   $nslcd_group    = $::ldap_auth::params::nslcd_group,
+  $nslcd_user     = $::ldap_auth::params::nslcd_user,
 ) inherits ldap_auth::params {
 
   if $enable == true or $enable == 'true' {
