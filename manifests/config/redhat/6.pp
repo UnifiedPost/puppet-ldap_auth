@@ -23,9 +23,10 @@ class ldap_auth::config::redhat::6 {
   $filter = $::ldap_auth::config::filter
 
 
+
   file {'/etc/nslcd.conf':
     owner   => 'root',
-    group   => 'nslcd',
+    group   => $::ldap_auth::nslcd_group,
     mode    => '0640',
     content => template('ldap_auth/nslcd.conf.erb'),
     require => Package[$::ldap_auth::packages],

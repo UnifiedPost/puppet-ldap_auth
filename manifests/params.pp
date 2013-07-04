@@ -5,7 +5,8 @@ class ldap_auth::params (
   $binddn        = undef,
   $bindpw        = undef,
   $filter        = [],
-  $nslcd_service = undef,
+  $nslcd_service = 'nslcd',
+  $nslcd_group   = 'ldap',
   $ssl           = false,
 ) {
 
@@ -22,15 +23,6 @@ class ldap_auth::params (
       'Debian'  => [ 'libnss-ldapd' , 'libpam-ldapd' ],
     },
     default => $packages,
-  }
-
-  ########################
-  ####    Service     ####
-  ########################
-
-  $_nslcd_service = $nslcd_service ? {
-    undef   => 'nslcd',
-    default => $nslcd_service,
   }
 
 }

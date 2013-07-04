@@ -39,7 +39,11 @@
 #
 # [*nslcd_service*]
 #   Override the name of the nslcd service.
-#   Defaults to OS specific.
+#   Defaults to 'nslcd'.
+#
+# [*nslcd_group*]
+#   Override the group the nslcd service is running as.
+#   Defaults to 'ldap'.
 #
 class ldap_auth (
   $enable         = true,
@@ -50,7 +54,8 @@ class ldap_auth (
   $ssl            = $::ldap_auth::params::ssl,
   $filter         = $::ldap_auth::params::filter,
   $packages       = $::ldap_auth::params::_packages,
-  $nslcd_service  = $::ldap_auth::params::_nslcd_service,
+  $nslcd_service  = $::ldap_auth::params::nslcd_service,
+  $nslcd_group    = $::ldap_auth::params::nslcd_group,
 ) inherits ldap_auth::params {
 
   if $enable == true or $enable == 'true' {
