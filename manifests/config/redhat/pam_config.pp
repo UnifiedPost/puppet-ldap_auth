@@ -3,6 +3,7 @@ define ldap_auth::config::redhat::pam_config() {
   Augeas {
     lens => 'Pam.lns',
     incl => "/etc/pam.d/${name}",
+    require => Package[$::ldap_auth::packages],
   }
 
   augeas {"ldap_auth::config-pam-${name}_auth":

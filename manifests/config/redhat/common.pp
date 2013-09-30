@@ -44,7 +44,8 @@ class ldap_auth::config::redhat::common {
       'set database[. = "netgroup" ]/service[2] ldap',
       'set database[. = "automount" ]/service[1] files',
       'set database[. = "automount" ]/service[2] ldap',
-    ]
+    ],
+    require => Package[$::ldap_auth::packages],
   }
 
 }

@@ -27,16 +27,22 @@ class ldap_auth::config::redhat::5 {
   file{'/etc/ldap.conf':
     mode    => '0644',
     content => template('ldap_auth/ldap.conf.erb'),
+    require => [
+      File['/etc/ldap.secret'],
+    ]
   }
 
   file{'/etc/ldap.secret':
     mode    => '0600',
     content => "${bindpw}\n",
+    require => Package[$::ldap_auth::packages],
   }
 
   service {'nscd':
     ensure => 'stopped',
   }
 
-  ldap_auth::config::redhat::pam_config { 'system-auth': }
+  ldap_auth::config::redhat::pam_config { 'system-auth':
+    require => Package[$::ldap_auth::packages],
+  }
 }

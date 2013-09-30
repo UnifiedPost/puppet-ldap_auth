@@ -18,6 +18,7 @@ class ldap_auth::config::debian {
       'set argument[1] umask=0022',
     ],
     onlyif  => 'get /files/etc/pam.d/common-session/*[module = "pam_mkhomedir.so"]/type != session',
+    require => Package[$::ldap_auth::packages],
   }
 
 }
